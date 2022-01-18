@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using dotnet_api_project.Dtos.Character;
 using dotnet_api_project.Models;
@@ -9,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_api_project.Controllers
 {
-    [Authorize]
+    // [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class CharacterController: ControllerBase
@@ -45,8 +46,9 @@ namespace dotnet_api_project.Controllers
         [HttpGet("GetAll")]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDto>>>> Get()
         {
+            int id = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
             // returning 200 status ok 
-            return Ok(await _characterService.GetAllCharacter());
+            return Ok(await _characterService.GetAllCharacter(id));
         }
 
 

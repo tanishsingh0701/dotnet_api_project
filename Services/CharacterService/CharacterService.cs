@@ -73,7 +73,7 @@ namespace dotnet_api_project.Service.CharacterService
 
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacter()
+        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacter(int userId)
         {
             
             // return characters;
@@ -83,7 +83,8 @@ namespace dotnet_api_project.Service.CharacterService
 
             var serviceResponse=new ServiceResponse<List<GetCharacterDto>>();
 
-            var dbCharacters=await _context.Characters.ToListAsync();
+            // var dbCharacters=await _context.Characters.ToListAsync();
+            var dbCharacters=await _context.Characters.Where(c => c.User.Id==userId).ToListAsync();
             // serviceResponse.Data=characters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             serviceResponse.Data=dbCharacters.Select(c => _mapper.Map<GetCharacterDto>(c)).ToList();
             return serviceResponse;

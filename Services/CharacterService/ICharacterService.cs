@@ -20,7 +20,7 @@ namespace dotnet_api_project.Service.CharacterService
 
         // For adding own service Response
 
-         Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacter();
+         Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacter(int userId);
         Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id);
         Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter);
         Task<ServiceResponse<GetCharacterDto>> UpdateCharacterDto(UpdateCharacterDto updatedCharacter);
