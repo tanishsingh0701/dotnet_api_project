@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = dotnet_api_project
-build_property.ProjectDir = c:\Users\sing13242\dotnet_api_project\
+build_property.ProjectDir = C:\Users\sing13242\dotnet_api_project\
