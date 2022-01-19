@@ -18,12 +18,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Http;
+using dotnet_api_project.Service.WeaponService;
+using dotnet_api_project.Service.FightService;
 
 namespace dotnet_api_project
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration )
         {
             Configuration = configuration;
         }
@@ -42,7 +45,7 @@ namespace dotnet_api_project
                 c.AddSecurityDefinition("oauth2",new OpenApiSecurityScheme
                 {
                     Description="Standard Authorization Header using the Bearer scheme. Example: \"bearer {token}\"",
-                    In=ParameterLocation.Header,
+                    In=ParameterLocation.Header,        
                     Name="Authorization",
                     Type= SecuritySchemeType.ApiKey
                 });
@@ -56,7 +59,7 @@ namespace dotnet_api_project
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
-                options.TokenValidationParameters=new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                options.TokenValidationParameters=new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey=true,
                     IssuerSigningKey=new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
@@ -64,6 +67,10 @@ namespace dotnet_api_project
                     ValidateAudience=false
                 };
             });
+
+            services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            services.AddScoped<IWeaponService,WeaponService>();
+            services.AddScoped<IFightService,FightService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
